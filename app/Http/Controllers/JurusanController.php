@@ -55,7 +55,9 @@ class JurusanController extends Controller
      */
     public function show(string $id)
     {
-        //
+         $jurusan = Jurusan::findOrFail($id);
+
+        return view('jurusan.show', compact('jurusan'));
     }
 
     /**
@@ -63,7 +65,9 @@ class JurusanController extends Controller
      */
     public function edit(string $id)
     {
-         return view('jurusan.edit',compact('jurusan'));
+        $jurusan = Jurusan::findOrFail($id);
+
+        return view('jurusan.edit', compact('jurusan'));
     }
 
     /**
@@ -71,7 +75,24 @@ class JurusanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+         $jurusan = Jurusan::findOrFail($id);
+
+    $request->validate([
+        'kode_jurusan' => 'required|string|max:20|unique:jurusans,kode_jurusan,' . $id,
+        'nama_jurusan' => 'required|string|max:100',
+        'keterangan' => 'nullable|string|max:200',
+        'status' => 'required|in:aktif,non-aktif',
+    ]);
+
+    $jurusan->update([
+        'kode_jurusan' => $request->kode_jurusan,
+        'nama_jurusan' => $request->nama_jurusan,
+        'keterangan' => $request->keterangan,
+        'status' => $request->status,
+    ]);
+
+    return redirect()->route('jurusan.index')
+        ->with('success', 'Data jurusan berhasil diperbarui.');
     }
 
     /**
@@ -79,9 +100,12 @@ class JurusanController extends Controller
      */
     public function destroy(string $id)
     {
-        
+         $jurusan = Jurusan::findOrFail($id);
+
         $jurusan->delete();
 
-        return redirect()->route('jurusan.index')->with('success', 'Data jurusan berhasil dihapus.');
+        return redirect()->route('jurusan.index')
+            ->with('success', 'Data jurusan berhasil dihapus.');
+
     }
 }
