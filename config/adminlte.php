@@ -798,7 +798,7 @@ return     [
         ],
         [
             'text' => 'jenjang',
-            'url' => 'admin/jenjang',
+            'url' => 'jenjang',
             'icon' => 'bi bi-file-earmark',
             'label' => 4,
             'label_color' => 'success',
