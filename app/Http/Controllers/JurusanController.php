@@ -39,7 +39,7 @@ class JurusanController extends Controller
          // Validasi sekaligus simpan hasilnya ke variabel $data
         $data = $request->validate([
             'kode_jurusan' => 'required|string|max:100',
-            'nama_jurusan'        => 'required|string|max:20',
+            'nama_jurusan'        => 'required|string|max:50',
             'keterangan'    => 'required|string|max:100',
             'status'      => 'required|string|max:50',
         ]);

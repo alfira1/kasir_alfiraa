@@ -9,25 +9,22 @@
 
 @section('content')
     <div class="card">
-        {{-- Header --}}
+        {{-- Header dengan Style AdminLTE (Title di kiri, Tools di kanan) --}}
         <div class="card-header">
             <h3 class="card-title">Daftar Jenjang</h3>
             <div class="card-tools">
+              
                 <a href="{{ route('jenjang.create') }}" class="btn btn-primary btn-sm">
                     <i class="fas fa-plus"></i> Tambah Jenjang
                 </a>
             </div>
         </div>
-
-        {{-- Pencarian dan Alert --}}
+        
+        {{-- Bagian Pencarian & Alert (Diberi padding agar rapi) --}}
         <div class="card-body pb-0">
             <form action="{{ route('jenjang.index') }}" method="GET" class="mb-3">
                 <div class="input-group">
-                    <input type="text" name="search"
-                        class="form-control"
-                        placeholder="Cari Nama Jenjang atau Keterangan"
-                        value="{{ request('search') }}">
-
+                    <input type="text" name="search" class="form-control" placeholder="Cari Nama Jenjang atau Kode Jenjang" value="{{ request('search') }}">
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="submit">
                             <i class="fas fa-search"></i> Cari
@@ -46,48 +43,35 @@
             @endif
         </div>
 
-        {{-- Tabel Jenjang --}}
+        {{-- Bagian Tabel (Style disamakan dengan Data Guru: p-0, table-hover, text-nowrap) --}}
         <div class="card-body table-responsive p-0">
             <table class="table table-hover text-nowrap">
                 <thead>
                     <tr>
                         <th style="width: 10px">No</th>
-                        <th>Nama Jenjang</th>
-                        <th>Keterangan</th>
+                        <th>Nama jenjang</th>
+                        <th>Keterangan</th>    
                         <th>Aksi</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     @forelse ($jenjangs as $key => $jenjang)
                     <tr>
                         <td>{{ $jenjangs->firstItem() + $key }}</td>
-                        <td>{{ $jenjang->nama_jenjang }}</td>
-                        <td>{{ $jenjang->keterangan }}</td>
+                        <td>{{ $jenjang->nama_jenjang}}</td>
+                        <td>{{ $jenjang->keterangan }}</td>    
                         <td>
-                            {{-- Tombol Show --}}
-                            <a class="btn btn-info btn-sm"
-                                href="{{ route('jenjang.show', $jenjang->id) }}"
-                                title="Lihat">
+                            {{-- Tombol Aksi disinkronkan stylenya (btn-sm, icon only) --}}
+                            <a class="btn btn-info btn-sm" href="{{ route('jenjang.show', $jenjang->id) }}" title="Lihat">
                                 <i class="bi bi-eye"></i>
                             </a>
-
-                            {{-- Tombol Edit --}}
-                            <a href="{{ route('jenjang.edit', $jenjang->id) }}"
-                                class="btn btn-warning btn-sm"
-                                title="Edit">
+                            <a href="{{ route('jenjang.edit', $jenjang->id) }}" class="btn btn-warning btn-sm" title="Edit">
                                 <i class="bi bi-pencil"></i>
                             </a>
-
-                            {{-- Tombol Hapus --}}
-                            <form action="{{ route('jenjang.destroy', $jenjang->id) }}"
-                                method="POST" style="display: inline-block;">
+                            <form action="{{ route('jenjang.destroy', $jenjang->id) }}" method="POST" style="display: inline-block;">
                                 @csrf
                                 @method('DELETE')
-
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"
-                                    title="Hapus">
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')" title="Hapus">
                                     <i class="bi bi-trash3"></i>
                                 </button>
                             </form>
@@ -95,18 +79,15 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4" class="text-center">
-                            Data tidak ditemukan.
-                        </td>
+                        <td colspan="6" class="text-center">Data tidak ditemukan.</td>
                     </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
 
-        {{-- Pagination --}}
-        <div class="card-footer">
-            {{ $jenjangs->appends(request()->query())->links('pagination::bootstrap-4') }}
-        </div>
+    <div class="card-footer">
+        {{ $jenjangs->appends(request()->query())->links('pagination::bootstrap-4') }}
+    </div>
     </div>
 @stop

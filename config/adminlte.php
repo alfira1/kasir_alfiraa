@@ -797,15 +797,15 @@ return     [
             'label_color' => 'success',
         ],
         [
-            'text' => 'jenjang',
+            'text' => 'Jenjang',
             'url' => 'jenjang',
             'icon' => 'bi bi-file-earmark',
             'label' => 4,
             'label_color' => 'success',
         ],
         [
-            'text' => 'kelas',
-            'url' => 'admin/kelas',
+            'text' => 'Kelas',
+            'url' => 'kelas',
             'icon' => 'bi bi-file-earmark',
             'label' => 4,
             'label_color' => 'success',
